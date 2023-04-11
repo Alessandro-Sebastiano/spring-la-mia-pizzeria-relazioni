@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import java.util.List;
+
 @Entity
 @Table(name = "pizzas")
 public class Pizza {
@@ -25,6 +27,8 @@ public class Pizza {
     @Column(nullable = false)
     private Integer price;
 
+    @OneToMany(mappedBy = "pizza")
+    private List<Offer> offer;
 
     public Pizza() {
         super();
@@ -68,4 +72,11 @@ public class Pizza {
         this.price = price;
     }
 
+    public List<Offer> getOffer() {
+        return offer;
+    }
+
+    public void setOffer(List<Offer> offer) {
+        this.offer = offer;
+    }
 }
