@@ -3,6 +3,7 @@ package org.lessons.java.springlamiapizzeriacrud.controller;
 import jakarta.validation.Valid;
 import org.lessons.java.springlamiapizzeriacrud.model.AlertMessages;
 import org.lessons.java.springlamiapizzeriacrud.model.Pizza;
+import org.lessons.java.springlamiapizzeriacrud.repository.IngredientRepository;
 import org.lessons.java.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,9 @@ public class PizzaController {
 
     @Autowired
     private PizzaRepository repo;
+
+    @Autowired
+    private IngredientRepository ingredientRepo;
 
     @GetMapping
     public String index(Model model, @RequestParam(name = "input") Optional<String> keyword) {
@@ -52,6 +56,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredients", ingredientRepo.findAll());
         return "/pizzas/create";
     }
 
@@ -66,6 +71,7 @@ public class PizzaController {
         persistPizza.setName(formPizza.getName());
         persistPizza.setDescription(formPizza.getDescription());
         persistPizza.setPrice(formPizza.getPrice());
+        persistPizza.setIngredients(formPizza.getIngredients());
 
         repo.save(persistPizza);
         redirectAttributes.addFlashAttribute("message", new AlertMessages(AlertMessages.typeAlert.SUCCESS, "Created pizza"));
@@ -78,6 +84,7 @@ public class PizzaController {
         Optional<Pizza> result = repo.findById(id);
         if (result.isPresent()) {
             model.addAttribute("pizza", result.get());
+            model.addAttribute("ingredients", ingredientRepo.findAll());
             return "/pizzas/edit";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
@@ -96,6 +103,7 @@ public class PizzaController {
         updatedPizza.setName(formPizza.getName());
         updatedPizza.setDescription(formPizza.getDescription());
         updatedPizza.setPrice(formPizza.getPrice());
+        updatedPizza.setIngredients(formPizza.getIngredients());
 
         repo.save(updatedPizza);
         redirectAttributes.addFlashAttribute("message", new AlertMessages(AlertMessages.typeAlert.SUCCESS, "Edited pizza"));

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "pizzas")
@@ -29,6 +30,9 @@ public class Pizza {
 
     @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL)
     private List<Offer> offer;
+
+    @ManyToMany
+    private Set<Ingredient> ingredients;
 
     public Pizza() {
         super();
@@ -78,5 +82,13 @@ public class Pizza {
 
     public void setOffer(List<Offer> offer) {
         this.offer = offer;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
