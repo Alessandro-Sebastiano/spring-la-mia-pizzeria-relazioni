@@ -2,17 +2,20 @@ package org.lessons.java.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "offer")
+@Table(name = "offers")
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     private LocalDate startDate;
+    @NotNull
     private LocalDate endDate;
     @NotEmpty
     private String title;
