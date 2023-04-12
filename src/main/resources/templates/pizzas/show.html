@@ -28,6 +28,14 @@
         </div>
     </div>
 
+    <th:block th:if="${pizza.ingredients.size != 0}">
+        <h5 class="mt-4">Ingredients :</h5>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" th:each="in : ${pizza.ingredients}" th:text="${in.name}"></li>
+        </ul>
+    </th:block>
+
     <h2 class="my-5 text-decoration-underline">Special Offer
         <a th:href="@{/offers/create(pizzaId=${pizza.id})}">
             <button type="button" class="btn btn-primary rounded-circle ms-3">

@@ -30,7 +30,12 @@
 
             <div class="my-4">
                 <label class="my-2" for="end-date">Offer end date</label>
-                <input class="form-control" type="date" id="end-date" th:field="*{endDate}">
+                <input class="form-control" type="date" id="end-date" th:field="*{endDate}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="my-4">
